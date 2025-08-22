@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from typing import List
+from api.models.target import Target
 
 app = FastAPI()
 
@@ -14,7 +16,7 @@ def say_hello():
 def say_status():
     return {'ok': True}
 
-@app.get('/api/targets')
+@app.get('/api/targets', response_model=List[Target])
 def targets(lat: float, lon: float, date: str, min_alt: float = 30) -> list[dict]:
     # fake values for now
     return [
