@@ -6,8 +6,10 @@ name = "pypi"
 [packages]
 fastapi = "*"
 uvicorn = {extras = ["standard"], version = "*"}
-httpx = "*"
 ruff = "*"
+httpx = "*"
+astropy = "*"
+numpy = "*"
 
 [dev-packages]
 pytest = "*"
