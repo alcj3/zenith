@@ -20,6 +20,19 @@ def say_status():
 
 @app.get('/api/targets', response_model=List[Target])
 async def targets(lat: float, lon: float, date: str, min_alt: float = 30) -> List[Target]:
+    """Return the brightest visible host stars for a given observer location and date
+
+    Args:
+        lat (float): observer latitude in degrees
+        lon (float): observer longitude in degrees
+        date (str): UTC date string in yyyy-mm-dd format
+        min_alt (float, optional): visibility cutoff in degrees. Defaults to 30.0
+
+    Returns:
+        list[Target]: a list of up to 25 visible targets, each containing:
+            - star metadata (name, ra/dec, visual magnitude)
+            - computed visibility data (alt time series, peak alt, best viewing window)
+    """    
     host_star_rows = await fetch_hosts()
     out = []
     for row in host_star_rows:
@@ -27,19 +40,6 @@ async def targets(lat: float, lon: float, date: str, min_alt: float = 30) -> Lis
         ra_deg = float(row['ra'])
         dec_deg = float(row['dec'])
         vmag = row.get('sy_vmag')
-        # # fake series for now
-        # series = [
-        #     {"t": f"{date}T05:00:00Z", "alt_deg": 12.0},
-        #     {"t": f"{date}T06:00:00Z", "alt_deg": 35.0},
-        # ]
-        # peak_altitude_deg = max(p['alt_deg'] for p in series)
-        # above = [p for p in series if p["alt_deg"] >= min_alt]
-        # best_window = (
-        #     {"start": above[0]["t"], "end": above[-1]["t"]}
-        #     if above else None
-        # )
-        # if not best_window:
-        #     continue
         vis = build_visibility(ra_deg, dec_deg, lat, lon, date, step_minutes=5, hours=12, min_alt=min_alt)
         if vis['best_window'] is None or vis['peak_altitude_deg'] < min_alt:
             continue
