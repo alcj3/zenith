@@ -3,8 +3,16 @@ from typing import List
 from api.models.target import Target
 from api.services.exo_client import fetch_hosts
 from api.services.astro import build_visibility
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['http://localhost:5173'],
+    allow_methods=['*'],
+    allow_headers=['*']
+)
 
 @app.get('/')
 def root():
