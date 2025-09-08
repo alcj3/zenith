@@ -1,0 +1,32 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center; 
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+td.window {
+  font-family: monospace;
+}
+
+tr:hover {
+  background: #e0e0ff;
+  color: black
+}
+
+tr.selected {
+  background: #e0e0ff;
+  color: black
+}
