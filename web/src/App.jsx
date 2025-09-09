@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import AltitudeChart from './AltitudeChart.jsx';
 
 const API = 'http://localhost:8000';
 
@@ -170,13 +171,7 @@ function App() {
       {selected && (
         <div style={{ marginTop: 16 }}>
           <h3>Altitude series — {selected.name}</h3>
-          <p style={{ fontSize: 12, color: "#555" }}>
-            First 5 points:&nbsp;
-            {selected.series
-              .slice(0, 5)
-              .map((p) => `${hhmm(p.t)}=${Math.round(p.alt_deg)}°`)
-              .join(", ")}
-          </p>
+          <AltitudeChart series={selected.series} minAlt={parseFloat(minAlt) || 30} />
         </div>
       )}
 
@@ -185,34 +180,3 @@ function App() {
 }
 
 export default App;
-
-// function App() {
-//   const [count, setCount] = useState(0)
-
-//   return (
-//     <>
-//       <div>
-//         <a href="https://vite.dev" target="_blank">
-//           <img src={viteLogo} className="logo" alt="Vite logo" />
-//         </a>
-//         <a href="https://react.dev" target="_blank">
-//           <img src={reactLogo} className="logo react" alt="React logo" />
-//         </a>
-//       </div>
-//       <h1>Vite + React</h1>
-//       <div className="card">
-//         <button onClick={() => setCount((count) => count + 1)}>
-//           count is {count}
-//         </button>
-//         <p>
-//           Edit <code>src/App.jsx</code> and save to test HMR
-//         </p>
-//       </div>
-//       <p className="read-the-docs">
-//         Click on the Vite and React logos to learn more
-//       </p>
-//     </>
-//   )
-// }
-
-// export default App
